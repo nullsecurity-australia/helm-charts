@@ -19,40 +19,22 @@ spec:
         app: {{ template "eveseat.name" . }}
         release: {{ .Release.Name }}
     spec:
-      volumes:
-        - name: seat-code
-          emptyDir: {}
       containers:
         - name: {{ .Chart.Name }}-web
-          image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
-          imagePullPolicy: {{ .Values.web.image.pullPolicy }}
-          volumeMounts:
-          - name: seat-code
-            mountPath: /var/www/seat
-          command: ["/bin/sh"]
-          args: ["-c", "envsubst '${NGINX_HOST}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && sed -i 's/seat-app/localhost/g' /etc/nginx/nginx.conf && nginx -g 'daemon off;'"]
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          command: ["web"]
           ports:
           - name: http
             containerPort: 80
             protocol: TCP
           env:
-            - name: NGINX_HOST
-              value: _
-          resources:
- {{ toYaml .Values.web.resources | indent 12 }}
-        - name: {{ .Chart.Name }}-app
-          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
-          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
-          volumeMounts:
-          - name: seat-code
-            mountPath: /var/www/seat
-          env:
             - name: DB_HOST
               value: {{ .Release.Name }}-mariadb
             - name: DB_DATABASE
-              value: {{ .Values.mariadb.db.name }}
+              value: {{ .Values.mariadb.auth.database }}
             - name: DB_USERNAME
-              value: {{ .Values.mariadb.db.user }}
+              value: {{ .Values.mariadb.auth.username }}
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -114,16 +96,14 @@ spec:
         - name: {{ .Chart.Name }}-worker
           image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag }}"
           imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
-          volumeMounts:
-          - name: seat-code
-            mountPath: /var/www/seat
+          command: ["worker"]
           env:
             - name: DB_HOST
               value: {{ .Release.Name }}-mariadb
             - name: DB_DATABASE
-              value: {{ .Values.mariadb.db.name }}
+              value: {{ .Values.mariadb.auth.database }}
             - name: DB_USERNAME
-              value: {{ .Values.mariadb.db.user }}
+              value: {{ .Values.mariadb.auth.username }}
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -185,16 +165,14 @@ spec:
         - name: {{ .Chart.Name }}-cron
           image: "{{ .Values.cron.image.repository }}:{{ .Values.cron.image.tag }}"
           imagePullPolicy: {{ .Values.cron.image.pullPolicy }}
-          volumeMounts:
-          - name: seat-code
-            mountPath: /var/www/seat
+          command: ["cron"]
           env:
             - name: DB_HOST
               value: {{ .Release.Name }}-mariadb
             - name: DB_DATABASE
-              value: {{ .Values.mariadb.db.name }}
+              value: {{ .Values.mariadb.auth.database }}
             - name: DB_USERNAME
-              value: {{ .Values.mariadb.db.user }}
+              value: {{ .Values.mariadb.auth.username }}
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:

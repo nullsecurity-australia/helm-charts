@@ -7,41 +7,35 @@ mariadb:
       tag: 10.2
     replication:
       enabled: false
-    db:
-      name: seat
-      user: seat
-      password:
+    auth:
+      database: seat
+      username: seat
+      password: 
+      rootPassword: 
 
 redis:
     cluster:
         enabled: false
     password:
 
-web:
-    image:
-        repository: eveseat/eveseat-nginx
-        tag: latest
-        pullPolicy: IfNotPresent
-    resources: {}
-
 app:
     image:
-        repository: eveseat/eveseat-app
-        tag: latest
+        repository: eveseat/seat
+        tag: 4
         pullPolicy: IfNotPresent
     resources: {}
 
 worker:
     image:
-        repository: eveseat/eveseat-worker
-        tag: latest
+        repository: eveseat/seat
+        tag: 4
         pullPolicy: IfNotPresent
     resources: {}
 
 cron:
     image:
-        repository: eveseat/eveseat-cron
-        tag: latest
+        repository: eveseat/seat
+        tag: 4
         pullPolicy: IfNotPresent
     resources: {}
 
@@ -90,4 +84,3 @@ global:
 
   seat:
     plugins:
-
