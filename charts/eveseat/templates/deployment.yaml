@@ -23,7 +23,7 @@ spec:
         - name: {{ .Chart.Name }}-web
           image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
           imagePullPolicy: {{ .Values.web.image.pullPolicy }}
-          command: ["web"]
+          command: ["/docker-entrypoint.sh", "web"]
           ports:
           - name: http
             containerPort: 80
@@ -96,7 +96,7 @@ spec:
         - name: {{ .Chart.Name }}-worker
           image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag }}"
           imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
-          command: ["worker"]
+          command: ["/docker-entrypoint.sh", "worker"]
           env:
             - name: DB_HOST
               value: {{ .Release.Name }}-mariadb
@@ -165,7 +165,7 @@ spec:
         - name: {{ .Chart.Name }}-cron
           image: "{{ .Values.cron.image.repository }}:{{ .Values.cron.image.tag }}"
           imagePullPolicy: {{ .Values.cron.image.pullPolicy }}
-          command: ["cron"]
+          command: ["/docker-entrypoint.sh", "cron"]
           env:
             - name: DB_HOST
               value: {{ .Release.Name }}-mariadb
