@@ -21,8 +21,8 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}-web
-          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
-          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
+          imagePullPolicy: {{ .Values.web.image.pullPolicy }}
           command: ["web"]
           ports:
           - name: http
@@ -92,7 +92,7 @@ spec:
             - name: SEAT_PLUGINS
               value: {{ .Values.global.seat.plugins|quote }}
           resources:
-{{ toYaml .Values.worker.resources | indent 12 }}
+{{ toYaml .Values.web.resources | indent 12 }}
         - name: {{ .Chart.Name }}-worker
           image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag }}"
           imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
