@@ -1,9 +1,9 @@
 dependencies:
 - name: mariadb
-  repository: https://charts.helm.sh/stable
-  version: 4.4.2
+  repository: https://charts.bitnami.com/bitnami
+  version: 11.3.1
 - name: redis
-  repository: https://charts.helm.sh/stable
-  version: 3.10.0
-digest: sha256:bf05b362f1939b2da21e086599a53ae93a41ead58613cb68bba38c9bdcf22479
-generated: "2022-09-27T19:56:45.1353835+09:30"
+  repository: https://charts.bitnami.com/bitnami
+  version: 17.2.0
+digest: sha256:c7b2c819f60a0c398c92427909e094c3e817cf6435b5baa3c8e4d48427e4d27d
+generated: "2022-09-27T21:04:09.3769366+09:30"
