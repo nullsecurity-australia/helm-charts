@@ -1,0 +1,24 @@
+apiVersion: v1
+entries:
+  eveseat:
+  - apiVersion: v1
+    appVersion: 4.0.4
+    created: "2022-09-27T10:29:01.382256475Z"
+    dependencies:
+    - name: mariadb
+      repository: https://charts.helm.sh/stable
+      version: 4.x.x
+    - name: redis
+      repository: https://charts.helm.sh/stable
+      version: 3.x.x
+    description: A Helm chart for EVE SeAT
+    digest: d021d3dbf3352bb09c08454ac5db50ef19d1c36b41a6182c3dd4f9b1375a944f
+    home: https://eveseat.github.io
+    keywords:
+    - eveseat
+    - eve
+    name: eveseat
+    urls:
+    - https://github.com/nullsecurity-australia/helm-charts/releases/download/eveseat-0.4.0/eveseat-0.4.0.tgz
+    version: 0.4.0
+generated: "2022-09-27T10:29:01.382261975Z"
