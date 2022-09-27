@@ -1,0 +1,93 @@
+# Default values for eveseat.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+mariadb:
+    image:
+      tag: 10.2
+    replication:
+      enabled: false
+    db:
+      name: seat
+      user: seat
+      password:
+
+redis:
+    cluster:
+        enabled: false
+    password:
+
+web:
+    image:
+        repository: eveseat/eveseat-nginx
+        tag: latest
+        pullPolicy: IfNotPresent
+    resources: {}
+
+app:
+    image:
+        repository: eveseat/eveseat-app
+        tag: latest
+        pullPolicy: IfNotPresent
+    resources: {}
+
+worker:
+    image:
+        repository: eveseat/eveseat-worker
+        tag: latest
+        pullPolicy: IfNotPresent
+    resources: {}
+
+cron:
+    image:
+        repository: eveseat/eveseat-cron
+        tag: latest
+        pullPolicy: IfNotPresent
+    resources: {}
+
+replicaCount: 1
+nodeSelector: {}
+tolarations: []
+affinity: {}
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  path: /
+  hosts:
+    - chart-example.local
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+global:
+  app:
+    url:
+    debug: false
+    key:
+    env: local
+
+  eve:
+    clientId:
+    clientSecret:
+
+  mail:
+    driver: smtp
+    host:
+    port: 587
+    username:
+    password:
+    encryption: ntls
+    fromAddress:
+    fromName:
+
+  seat:
+    plugins:
+

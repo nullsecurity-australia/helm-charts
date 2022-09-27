@@ -1,0 +1,9 @@
+apiVersion: v1
+appVersion: 4.0.4
+description: A Helm chart for EVE SeAT
+home: https://eveseat.github.io
+keywords:
+- eveseat
+- eve
+name: eveseat
+version: 0.4.0
