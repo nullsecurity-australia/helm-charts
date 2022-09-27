@@ -1,9 +1,9 @@
 dependencies:
 - name: mariadb
-  repository: https://kubernetes-charts.storage.googleapis.com/
-  version: 4.2.5
+  repository: https://charts.helm.sh/stable
+  version: 4.4.2
 - name: redis
-  repository: https://kubernetes-charts.storage.googleapis.com/
-  version: 3.6.0
-digest: sha256:25d1c27b872469eb2b318fe1ee97fe0d4dbec95059e3968f2e8fd1a379dcc37d
-generated: 2018-06-24T21:58:20.123186174+02:00
+  repository: https://charts.helm.sh/stable
+  version: 3.10.0
+digest: sha256:bf05b362f1939b2da21e086599a53ae93a41ead58613cb68bba38c9bdcf22479
+generated: "2022-09-27T19:56:45.1353835+09:30"
