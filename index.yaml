@@ -124,6 +124,19 @@ entries:
   eveseat-workers:
   - apiVersion: v1
     appVersion: 4.0.4
+    created: "2022-10-15T12:25:42.269255663Z"
+    description: A Helm chart for EVE SeAT Scaling Workers
+    digest: ef2e71feb190b6f75a7ade36ec6c9ec402657cd17aa8832e3efcc387207e3c7d
+    home: https://eveseat.github.io
+    keywords:
+    - eveseat
+    - eve
+    name: eveseat-workers
+    urls:
+    - https://github.com/nullsecurity-australia/helm-charts/releases/download/eveseat-workers-0.1.0/eveseat-workers-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v1
+    appVersion: 4.0.4
     created: "2022-10-15T12:13:37.324722419Z"
     description: A Helm chart for EVE SeAT Scaling Workers
     digest: 8adf2dedf07d82c6f6ae3e7fcddb25adc6893f3c2effd58ccdd6a24d6b1abc3a
@@ -161,4 +174,4 @@ entries:
     urls:
     - https://github.com/nullsecurity-australia/helm-charts/releases/download/eveseat-workers-0.0.1/eveseat-workers-0.0.1.tgz
     version: 0.0.1
-generated: "2022-10-15T12:13:37.324848518Z"
+generated: "2022-10-15T12:25:42.269286363Z"
