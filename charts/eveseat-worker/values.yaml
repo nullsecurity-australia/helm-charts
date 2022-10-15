@@ -3,6 +3,7 @@
 # Declare variables to be passed into your templates.
 
 worker:
+    seatdeploymentname: eveseat
     image:
         repository: eveseat/seat
         tag: 4

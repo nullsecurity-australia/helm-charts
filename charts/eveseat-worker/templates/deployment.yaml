@@ -26,7 +26,7 @@ spec:
           command: ["/docker-entrypoint.sh", "worker"]
           env:
             - name: DB_HOST
-              value: {{ .Release.Name }}-mariadb
+              value: {{ .Values.seatdeploymentname }}-mariadb
             - name: DB_DATABASE
               value: {{ .Values.mariadb.auth.database }}
             - name: DB_USERNAME
@@ -34,14 +34,14 @@ spec:
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Release.Name }}-mariadb
+                  name: {{ .Values.seatdeploymentname }}-mariadb
                   key: mariadb-password
             - name: REDIS_HOST
-              value: {{ .Release.Name }}-redis-master
+              value: {{ .Values.seatdeploymentname }}-redis-master
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Release.Name }}-redis
+                  name: {{ .Values.seatdeploymentname }}-redis
                   key: redis-password
             - name: APP_DEBUG
               value: {{ .Values.global.app.debug|quote }}
@@ -52,17 +52,17 @@ spec:
             - name: APP_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "eveseat-workers.fullname" . }}
+                  name: {{ .Values.seatdeploymentname }}
                   key: app-key
             - name: EVE_CLIENT_ID
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "eveseat-workers.fullname" . }}
+                  name: {{ .Values.seatdeploymentname }}
                   key: eve-client-id
             - name: EVE_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "eveseat-workers.fullname" . }}
+                  name: {{ .Values.seatdeploymentname }}
                   key: eve-client-secret
             - name: EVE_CALLBACK_URL
               value: "{{ .Values.global.app.url }}/auth/eve/callback"
@@ -77,7 +77,7 @@ spec:
             - name: MAIL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "eveseat-workers.fullname" . }}
+                  name: {{ .Values.seatdeploymentname }}
                   key: mail-password
             - name: MAIL_ENCRYPTION
               value: {{ .Values.global.mail.encryption|quote }}
