@@ -9,10 +9,6 @@ metadata:
     heritage: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
-  autoScaling:
-    horizontal:
-      maxReplicas: {{ .Values.maxReplicaCount }}
-      averageCPU: {{ .Values.replicaAvgCPU }}
   selector:
     matchLabels:
       app: {{ template "eveseat-worker.name" . }}

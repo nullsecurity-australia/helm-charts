@@ -9,7 +9,7 @@ worker:
         pullPolicy: Always
     resources: {}
 
-replicaCount: 1
+replicaCount: 3
 nodeSelector: {}
 tolarations: []
 affinity: {}
