@@ -3,13 +3,18 @@
 # Declare variables to be passed into your templates.
 
 worker:
-    seatdeploymentname: eveseat
     image:
         repository: eveseat/seat
         tag: 4
         pullPolicy: Always
     resources: {}
 
+mariadb: # Passwords are in secrets.
+    auth:
+      database: seat
+      username: seat
+
+seatdeploymentname: eveseat #!! The SeAT Deployment MUST BE IN THE SAME NAMESPACE !!#
 replicaCount: 3
 nodeSelector: {}
 tolarations: []
