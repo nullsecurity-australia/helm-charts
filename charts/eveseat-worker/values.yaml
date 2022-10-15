@@ -1,0 +1,39 @@
+# Default values for eveseat-worker.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+worker:
+    image:
+        repository: eveseat/seat
+        tag: 4
+        pullPolicy: Always
+    resources: {}
+
+replicaCount: 3
+nodeSelector: {}
+tolarations: []
+affinity: {}
+
+global:
+  app:
+    url:
+    debug: false
+    key:
+    env: local
+
+  eve:
+    clientId:
+    clientSecret:
+
+  mail:
+    driver: smtp
+    host:
+    port: 587
+    username:
+    password:
+    encryption: ntls
+    fromAddress:
+    fromName:
+
+  seat:
+    plugins:

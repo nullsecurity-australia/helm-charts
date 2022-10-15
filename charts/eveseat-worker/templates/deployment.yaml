@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "eveseat-worker.fullname" . }}
+  labels:
+    app: {{ template "eveseat-worker.name" . }}
+    chart: {{ template "eveseat-worker.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "eveseat-worker.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "eveseat-worker.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-worker
+          image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag }}"
+          imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
+          command: ["/docker-entrypoint.sh", "worker"]
+          env:
+            - name: DB_HOST
+              value: {{ .Release.Name }}-mariadb
+            - name: DB_DATABASE
+              value: {{ .Values.mariadb.auth.database }}
+            - name: DB_USERNAME
+              value: {{ .Values.mariadb.auth.username }}
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mariadb
+                  key: mariadb-password
+            - name: REDIS_HOST
+              value: {{ .Release.Name }}-redis-master
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-redis
+                  key: redis-password
+            - name: APP_DEBUG
+              value: {{ .Values.global.app.debug|quote }}
+            - name: APP_URL
+              value: {{ .Values.global.app.url|quote }}
+            - name: APP_ENV
+              value: {{ .Values.global.app.env|quote }}
+            - name: APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "eveseat-worker.fullname" . }}
+                  key: app-key
+            - name: EVE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "eveseat-worker.fullname" . }}
+                  key: eve-client-id
+            - name: EVE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "eveseat-worker.fullname" . }}
+                  key: eve-client-secret
+            - name: EVE_CALLBACK_URL
+              value: "{{ .Values.global.app.url }}/auth/eve/callback"
+            - name: MAIL_DRIVER
+              value: {{ .Values.global.mail.driver|quote }}
+            - name: MAIL_HOST
+              value: {{ .Values.global.mail.host|quote }}
+            - name: MAIL_PORT
+              value: {{ .Values.global.mail.port|quote }}
+            - name: MAIL_USERNAME
+              value: {{ .Values.global.mail.username|quote }}
+            - name: MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "eveseat-worker.fullname" . }}
+                  key: mail-password
+            - name: MAIL_ENCRYPTION
+              value: {{ .Values.global.mail.encryption|quote }}
+            - name: MAIL_FROM_ADDRESS
+              value: {{ .Values.global.mail.fromAddress|quote }}
+            - name: MAIL_FROM_NAME
+              value: {{ .Values.global.mail.fromName|quote }}
+            - name: SEAT_PLUGINS
+              value: {{ .Values.global.seat.plugins|quote }}
+          resources:
+{{ toYaml .Values.worker.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

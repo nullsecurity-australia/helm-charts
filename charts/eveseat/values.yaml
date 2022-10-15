@@ -26,6 +26,7 @@ web:
     resources: {}
 
 worker:
+    enable: true # disable this for scaling using another chart
     image:
         repository: eveseat/seat
         tag: 4
