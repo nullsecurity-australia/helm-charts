@@ -93,6 +93,7 @@ spec:
               value: {{ .Values.global.seat.plugins|quote }}
           resources:
 {{ toYaml .Values.web.resources | indent 12 }}
+{{ if or .Values.worker.enable (not (hasKey .Values.worker "enable"))}}
         - name: {{ .Chart.Name }}-worker
           image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag }}"
           imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
@@ -162,6 +163,7 @@ spec:
               value: {{ .Values.global.seat.plugins|quote }}
           resources:
 {{ toYaml .Values.worker.resources | indent 12 }}
+{{ end }}
         - name: {{ .Chart.Name }}-cron
           image: "{{ .Values.cron.image.repository }}:{{ .Values.cron.image.tag }}"
           imagePullPolicy: {{ .Values.cron.image.pullPolicy }}
